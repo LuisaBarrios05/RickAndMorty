@@ -3,9 +3,10 @@ const server = express();
 const PORT = 3001;
 const router = require("./routes/index");
 const morgan = require("morgan");
-
+const { conn } = require("./DB_connection");
+console.log(1);
 server.use(express.json());
-
+console.log(2);
 server.use(morgan("dev"));
 
 server.use((req, res, next) => {
@@ -20,6 +21,8 @@ server.use((req, res, next) => {
 });
 
 server.use("/rickandmorty", router);
+
+conn.sync({ force: false });
 
 server.listen(PORT, () => {
   console.log(`Server raised in port: ${PORT}`);
